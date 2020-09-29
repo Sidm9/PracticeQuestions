@@ -1,11 +1,21 @@
 #include <iostream>
 #include <vector>
-using namespace std
-for (int i = 0; i < count; i++)
+using namespace std;
+int main()
 {
-    vector<int> g1;
-    for (int i = 0; i < 5; i++) {
-        g1.pushBack(i);
-        
+    int a, n;
+    cout << "Enter Length" << endl;
+    cin >> a;
+    vector<int> arr;
+
+    for (int i = 0; i < a; i++)
+    {
+        cin >> n;
+        arr.push_back(n);
     }
+
+    for (int i : arr)
+        cout << i << endl;
+
+    return 0;
 }
