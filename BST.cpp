@@ -1,123 +1,72 @@
 #include <iostream>
 using namespace std;
 
-struct _NODE_DATA_BST_
+class bst
 {
-    int _KEY_VALUE_;
-    struct _NODE_DATA_BST_ *_RIGHT_;
-    struct _NODE_DATA_BST_ *_LEFT_;
-};
 
-class _BINARY_TREE_ADT_
-{
+    int data;
+    bst *right;
+    bst *left;
+
 public:
-    _BINARY_TREE_ADT_();
-    ~_BINARY_TREE_ADT_();
+    bst();
+    bst(int);
 
-    void _INSERT_(int _KEY_);
-    _NODE_DATA_BST_ *_SEARCH_(int _KEY_);
-    void _DESTROY_TREE_();
-
-private:
-    void _DESTROY_TREE_(_NODE_DATA_BST_ *_LEAF_NODE_);
-    void _INSERT_(int _KEY_, _NODE_DATA_BST_ *_LEAF_NODE_);
-
-    _NODE_DATA_BST_ *_SEARCH_(int _KEY_, _NODE_DATA_BST_ *_LEAF_NODE_);
-
-    _NODE_DATA_BST_ *_ROOT_NODE_;
+    bst *insert(bst *, int);
+    void inorder(bst *);
 };
 
-_BINARY_TREE_ADT_::_BINARY_TREE_ADT_()
+bst::bst()
 {
-    _ROOT_NODE_ = nullptr;
+
+    data = 0;
+    left = right = nullptr;
 }
 
-_BINARY_TREE_ADT_::~_BINARY_TREE_ADT_()
+bst ::bst(int val)
 {
-    _DESTROY_TREE_();
+    data = val;
+    left = right = nullptr;
 }
 
-void _BINARY_TREE_ADT_::_DESTROY_TREE_(_NODE_DATA_BST_ *_LEAF_NODE_)
+bst *bst::insert(bst *root, int value)
 {
-    if (_LEAF_NODE_ != nullptr)
+    if (!root)
     {
-        _DESTROY_TREE_(_LEAF_NODE_->_LEFT_);
-        _DESTROY_TREE_(_LEAF_NODE_->_RIGHT_);
-        delete _LEAF_NODE_;
+        return new bst(value);
     }
-}
-void _BINARY_TREE_ADT_::_INSERT_(int _KEY_, _NODE_DATA_BST_ *_LEAF_NODE_)
-{
-    if (_KEY_ < _LEAF_NODE_->_KEY_VALUE_)
+    if (value > root->data)
     {
-        if (_LEAF_NODE_->_LEFT_ != nullptr)
-            _INSERT_(_KEY_, _LEAF_NODE_->_LEFT_);
-        else
-        {
-            _LEAF_NODE_->_LEFT_ = new _NODE_DATA_BST_;
-            _LEAF_NODE_->_LEFT_->_KEY_VALUE_ = _KEY_;
-            _LEAF_NODE_->_LEFT_->_LEFT_ = nullptr;
-            _LEAF_NODE_->_LEFT_->_RIGHT_ = nullptr;
-        }
-    }
-    else if (_KEY_ >= _LEAF_NODE_->_KEY_VALUE_)
-    {
-        if (_LEAF_NODE_->_RIGHT_ != nullptr)
-            _INSERT_(_KEY_, _LEAF_NODE_->_RIGHT_);
-        else
-        {
-            _LEAF_NODE_->_RIGHT_ = new _NODE_DATA_BST_;
-            _LEAF_NODE_->_RIGHT_->_KEY_VALUE_ = _KEY_;
-            _LEAF_NODE_->_RIGHT_->_LEFT_ = nullptr;
-            _LEAF_NODE_->_RIGHT_->_RIGHT_ = nullptr;
-        }
-    }
-}
-
-_NODE_DATA_BST_ *_BINARY_TREE_ADT_::_SEARCH_(int _KEY_, _NODE_DATA_BST_ *_LEAF_NODE_)
-{
-    if (_LEAF_NODE_ != nullptr)
-    {
-        if (_KEY_ == _LEAF_NODE_->_KEY_VALUE_)
-            return _LEAF_NODE_;
-        if (_KEY_ < _LEAF_NODE_->_KEY_VALUE_)
-            return _SEARCH_(_KEY_, _LEAF_NODE_->_LEFT_);
-        else
-            return _SEARCH_(_KEY_, _LEAF_NODE_->_RIGHT_);
+        root->right = insert(root->right, value);
     }
     else
-        return nullptr;
-}
-void _BINARY_TREE_ADT_::_INSERT_(int _KEY_)
-{
-    if (_ROOT_NODE_ != nullptr)
-        _INSERT_(_KEY_, _ROOT_NODE_);
-
-    else
     {
-        _ROOT_NODE_ = new _NODE_DATA_BST_;
-        _ROOT_NODE_->_KEY_VALUE_ = _KEY_;
-        _ROOT_NODE_->_LEFT_ = nullptr;
-        _ROOT_NODE_->_RIGHT_ = nullptr;
+        root->left = insert(root->left, value);
     }
+    return root;
 }
-_NODE_DATA_BST_ *_BINARY_TREE_ADT_::_SEARCH_(int _KEY_)
+void bst::inorder(bst *root)
 {
-    return _SEARCH_(_KEY_, _ROOT_NODE_);
+    if (!root)
+    {
+        return;
+    }
+    inorder(root->left);
+    cout << root->data << endl;
+    inorder(root->right);
 }
+int main()
+{
+    bst b;
+    bst *root = nullptr;
+    root = b.insert(root, 50);
+    b.insert(root, 30);
+    b.insert(root, 20);
+    b.insert(root, 40);
+    b.insert(root, 70);
+    b.insert(root, 60);
+    b.insert(root, 80);
 
-void _BINARY_TREE_ADT_::_DESTROY_TREE_()
-{
-    _DESTROY_TREE_(_ROOT_NODE_);
-}
-int main(int argc, char const *argv[])
-{
-    _BINARY_TREE_ADT_ a;
-    a._INSERT_(1);
-    cout << "OK";
-    a._INSERT_(2);
-    a._INSERT_(50);
-    a._INSERT_(40);
-
+    b.inorder(root);
     return 0;
 }
