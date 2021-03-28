@@ -1,0 +1,61 @@
+#include <iostream>
+#include <stdlib.h>
+
+using namespace std;
+
+typedef struct STACK
+{
+    int TOP;
+    unsigned CAPACITY;
+    int *ARRAY;
+
+} STACK_STRUCTURE;
+
+void ENQUE(STACK_STRUCTURE *POINTER_, int VALUE);
+void DEQUE(STACK_STRUCTURE *POINTER_, STACK_STRUCTURE *POINTER_2);
+void PEEK(STACK_STRUCTURE *POINTER_);
+STACK_STRUCTURE *CREATE_STACK(unsigned CAPACITY);
+
+int main()
+{
+    STACK_STRUCTURE *STACK_ONE = CREATE_STACK(10);
+    STACK_STRUCTURE *STACK_2 = CREATE_STACK(10);
+
+    ENQUE(STACK_ONE, 1);
+    ENQUE(STACK_ONE, 2);
+    ENQUE(STACK_ONE, 3);
+    DEQUE(STACK_2, STACK_ONE);
+
+    PEEK(STACK_2);
+
+    return 0;
+}
+
+STACK_STRUCTURE *CREATE_STACK(unsigned CAPACITY)
+{
+    STACK_STRUCTURE *POINTER_ = (STACK_STRUCTURE *)malloc(sizeof(STACK_STRUCTURE));
+    POINTER_->CAPACITY = CAPACITY;
+    POINTER_->TOP = -1;
+    POINTER_->ARRAY = (int *)malloc(POINTER_->CAPACITY * sizeof(int));
+}
+
+void ENQUE(STACK_STRUCTURE *POINTER_, int VALUE)
+{
+    if (POINTER_->TOP == POINTER_->CAPACITY)
+        cout << "Queue Overflow";
+
+    POINTER_->ARRAY[POINTER_->TOP++] = VALUE;
+}
+
+void DEQUE(STACK_STRUCTURE *POINTER_, STACK_STRUCTURE *POINTER_2)
+{
+    if (POINTER_2->TOP == -1)
+        cout << "Queue Underflow";
+
+    while (POINTER_2->TOP-- != -1)
+        ENQUE(POINTER_, POINTER_2->ARRAY[POINTER_2->TOP]);
+}
+void PEEK(STACK_STRUCTURE *POINTER_)
+{
+    cout << POINTER_->TOP;
+}
