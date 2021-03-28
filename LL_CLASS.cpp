@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include <unordered_map>
 using namespace std;
 
 class Node
@@ -17,6 +17,33 @@ public:
             cout << " " << n->data << " " << endl;
             n = n->next;
         }
+    }
+
+    void traverseAndSave(Node *n)
+    {
+        Node *ptr = n->next;
+        unordered_map<Node *, int> map = {};
+
+        while (n != NULL)
+        {
+            // cout << " " << n->data << " " << endl;
+
+            map[n] = n->data;
+
+            n = n->next;
+        }
+
+        for (auto i : map)
+        {
+            cout << i.first << "   " << i.second << endl;
+        }
+
+        auto temp = map.find(ptr);
+
+        if(temp == map.end())
+            cout << "Not found" << endl;
+        else
+            cout << temp->first << " is " << temp->second << endl;
     }
 };
 int main()
@@ -36,7 +63,9 @@ int main()
     third->next = NULL;
 
     Node Object;
-    Object.traverse(head);
+    // Object.traverse(head);
+
+    Object.traverseAndSave(head);
 
     return 0;
 }
