@@ -1,33 +1,50 @@
 #include <iostream>
 #include <vector>
+#include <map>
 using namespace std;
 
-void addEdge(vector<int> adj[], int u, int v)
+void print(vector<vector<int>> &graph)
 {
-    adj[u].push_back(v);
-    adj[v].push_back(u);
+    for (int i = 0; i < graph.size(); i++)
+    {
+        for (int j = 0; j < graph.size(); j++)
+        {
+            cout << graph[i][j] << ' ';
+        }
+        cout << endl;
+    }
 }
 
+void addGraph(vector<vector<int>> &a, int r, int c)
+{
+    a[r][c] = 1;
+    a[c][r] = 1;
+}
+void dfs(map<int, bool> &visited, vector<vector<int>> &graph, int v)
+{
+    visited[v] = true;
+    cout << endl
+         << v << ' ';
+
+    for (int i = 0; i < graph.size(); i++)
+    {
+        if (!visited[i])
+            dfs(visited, graph, i);
+    }
+}
 int main()
 {
-    vector<int> graph[5];
-    addEdge(graph, 0, 1);
-    addEdge(graph, 0, 4);
-    addEdge(graph, 1, 2);
-    addEdge(graph, 1, 3);
-    addEdge(graph, 1, 4);
-    addEdge(graph, 2, 3);
-    addEdge(graph, 3, 4);
 
-    for (int i = 0; i < 5; i++)
-    {
-        cout << "" << i << " =" << ' ';
-        for (int j : graph[i])
-        {
-            cout << j << "-->";
-        }
-        cout << "NULL" << endl;
-    }
+    vector<vector<int>> graph(10, vector<int>(10, 0));
+    map<int, bool> visited;
 
-    return 0;
+    addGraph(graph, 0, 1);
+    addGraph(graph, 0, 9);
+    addGraph(graph, 1, 2);
+    addGraph(graph, 2, 0);
+    addGraph(graph, 2, 3);
+    addGraph(graph, 9, 3);
+
+    print(graph);
+    dfs(visited, graph, 1);
 }
