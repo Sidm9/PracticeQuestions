@@ -32,17 +32,11 @@ bst ::bst(int val)
 bst *bst::insert(bst *root, int value)
 {
     if (!root)
-    {
         return new bst(value);
-    }
     if (value > root->data)
-    {
         root->right = insert(root->right, value);
-    }
     else
-    {
         root->left = insert(root->left, value);
-    }
     return root;
 }
 void bst::inorder(bst *root)
