@@ -41,7 +41,6 @@ void insertFirst()
     {
         ptr->next = head;
         head = ptr;
-        ptr->next = nullptr;
     }
     print();
 }
@@ -130,14 +129,14 @@ void DeleteLast()
         free(ptr);
     }
 };
-void DeleteSpecific(){};
 int main()
 {
     int n;
     int i = 0;
     for (; i < 5; i++)
     {
-        cout << "1.) Insert First \n2.) Insert Last \n3.) Insert Between \n4.) DeleteFirst \n5.) DeleteLast \n6.) DeleteSpecific" << endl;
+        cout << 5-i << " Tries Remaining\n\n";
+        cout << "1.) Insert First \n2.) Insert Last \n3.) Insert Between \n4.) DeleteFirst \n5.) DeleteLast \n "<< endl;
         cin >> n;
         switch (n)
         {
@@ -155,9 +154,6 @@ int main()
             break;
         case 5:
             DeleteLast();
-            break;
-        case 6:
-            DeleteSpecific();
             break;
         default:
             break;
