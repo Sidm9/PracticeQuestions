@@ -33,11 +33,15 @@ void insertFirst()
     cin >> ptr->data;
 
     if (head == nullptr)
+    {
         head = ptr;
+        ptr->next = nullptr;
+    }
     else
     {
         ptr->next = head;
         head = ptr;
+        ptr->next = nullptr;
     }
     print();
 }

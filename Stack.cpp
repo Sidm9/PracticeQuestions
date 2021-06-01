@@ -11,7 +11,6 @@ class stack
 
 public:
     stack(int size = SIZE);
-    ~stack();
 
     void push(int);
     int pop();
@@ -29,17 +28,12 @@ stack::stack(int size)
     top = -1;
 }
 
-stack::~stack()
-{
-    delete[] arr;
-}
-
 void stack::push(int x)
 {
     if (isFull())
     {
-        cout << "Stack OVerflow " << endl;
-        exit(EXIT_FAILURE);
+        cout << "Stack Overflow " << endl;
+        return;
     }
     else
     {
@@ -52,11 +46,11 @@ int stack::pop()
     if (isEmpty())
     {
         cout << "Underflow" << endl;
-        exit(EXIT_FAILURE);
+        return 1;
     }
     else
     {
-        cout << "Popping" << endl;
+        cout << "Pop " << arr[top] << endl;
         return arr[--top];
     }
 }
@@ -65,7 +59,7 @@ int stack::peek()
     if (!isEmpty())
         return arr[top];
     else
-        exit(EXIT_FAILURE);
+        return 1;
 }
 
 int stack ::size()
@@ -79,20 +73,23 @@ bool stack::isEmpty()
 }
 bool stack::isFull()
 {
-    return top == capacity - 1;
+    return true ? top == capacity - 1 : false;
 }
 int main()
 {
-    stack pt(3);
-    pt.push(1);
-    pt.push(2);
+    stack pt(1);
+    pt.push(3);
+    pt.push(4);
+    pt.push(5);
+    cout << "Top Element is " << pt.peek() << endl;
     pt.pop();
-    pt.push(69);
+    cout << "Top Element is " << pt.peek() << endl;
+    pt.push(10);
+    cout << "Top Element is " << pt.peek() << endl;
     pt.pop();
 
-    cout << "Top Element is" << pt.peek() << endl;
-    cout << "Stack Size is" << pt.size() << endl;
-    cout << pt.peek() << endl;
+    cout << "Top Element is " << pt.peek() << endl;
+    cout << "Stack Size is " << pt.size() << endl;
 
     if (pt.isEmpty())
         cout << "Stack is Empty " << endl;
